@@ -1,20 +1,14 @@
 
 
-let activeQuestion = 1;
-let currentQuestion;
-let score = 0;
+
 
 
 const quizForm = document.getElementById('quiz-options');
 const form = document.getElementById('quiz-form');
 const submitButton = document.getElementById('submit-btn');
-
-
 const quizBod = document.getElementById('quiz-body');
 
 
-
-//let them start with this or else it will take to long to do
 const questions = [
     {
         number: 1,
@@ -82,21 +76,21 @@ function setActiveQuestion() {
 
     quizForm.innerHTML = '';
 
-    //we subtract one because arrays are 0 indexed
-    currentQuestion = questions[activeQuestion - 1];
+    // set the current question variable to the current question object 
+
+    // create a variable for the current question options
 
 
-    let options = currentQuestion.options;
 
     const questionElement = document.createElement('h2');
     questionElement.innerText = currentQuestion.question;
     quizForm.appendChild(questionElement);
 
 
-    for (let i = 0; i < options.length; i++) {
+    for (/*Loop through your options and create an input radio button for each one*/) {
 
-        var option = document.createElement('input');
-        var optionLabel = document.createElement('label');
+        // create a variable called option and use it to dynamically create an input element
+        // do the same thing wil a label and we'll call this optionLabel
         var optionContainer = document.createElement('div');
         var letterLabel = document.createElement('span');
 
@@ -109,26 +103,25 @@ function setActiveQuestion() {
         } else {
             letterLabel.innerText = "D";
         }
-
         optionContainer.classList.add('option-container');
 
         option.type = 'radio';
         option.name = 'option';
         option.value = i + 1;
 
+        // set the attributes of the option input
+        //we want to set the type to 'radio' the name to 'option' and the value to the value which should be 1-4 in order
 
-        option.innerText = options[i];
 
+        // set options innter text to the correct value
 
-        optionLabel.innerText = options[i];
+        // set the label inner text to the correct value
+
 
         quizForm.appendChild(optionContainer);
         optionContainer.appendChild(option);
         optionContainer.appendChild(letterLabel);
         optionContainer.appendChild(optionLabel);
-
-
-
 
     }
 }
@@ -137,33 +130,42 @@ function setActiveQuestion() {
 function handleSubmit(e) {
     e.preventDefault();
 
+
+    // this is how we can check and see which input is selected
     const selectedOption = document.querySelector('input[name="option"]:checked');
 
+
+    // checks if anything is selected
     if (selectedOption) {
-        const selectedValue = selectedOption.value;
-        if (selectedValue === currentQuestion.correctAnswer) {
-            score++;
+
+        // create a variable that stores the value of out selected option
+        if (/* we need to check to see if the user answered the question right */) {
+            //if they do then add to the score
         }
 
-        activeQuestion++;
+        // add 1 to our activeQuestion variable
 
-        if (activeQuestion <= questions.length) {
-            setActiveQuestion();
+        if (/* lets check and see if we are on the last question or not */) {
+            // if we aren't, then lets run our setActiveQuestion function
         } else {
             quizBod.innerHTML = `
             <div class="win-screen">
             <h1>Your quiz is complete</h1>
 
-            <p>final score: ${score}</p>
+            //display the score here 
 
             </div>
             `
         }
 
     } else {
+        //alerts if no answer is selected
         alert("please select an answer before submitting")
     }
 }
+
+//we need to initially run this on page load 
 setActiveQuestion();
 
+//adds the submit function to our button
 submitButton.addEventListener("click", handleSubmit);
